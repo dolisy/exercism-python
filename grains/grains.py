@@ -1,5 +1,3 @@
-import numpy as np
-
 def on_square(integer_number):
   if integer_number in range(1, 65):
     return pow(2, integer_number - 1)
