@@ -2,15 +2,19 @@ import re
 
 class Luhn(object):
   def __init__(self, string):
-    self.string = string
+    self.numbers = string.replace(' ', '')
 
   def is_valid(self):
-    regex = ur"\d"
-    numbers = re.findall(regex, self.string)
+    if len(self.numbers) < 2:
+      return False
+    try:
+        return (
+          sum([int(x) for i, x in enumerate(str(self.numbers)) if (len(str(self.numbers)) - i) % 2 == 1])
+          +
+          sum([2 * int(x) for i, x in enumerate(str(self.numbers)) if (len(str(self.numbers)) - i) % 2 == 0 and 2 * int(x) <= 9])
+          +
+          sum([2 * int(x) - 9 for i, x in enumerate(str(self.numbers)) if (len(str(self.numbers)) - i) % 2 == 0 and 2 * int(x) > 9])
 
-    result = [int(x) * (2 - (i%2)) for i, x in enumerate(numbers)]
-
-    if sum(result) > 0:
-      return sum(result) % 10 == 0
-    else:
+        ) % 10 == 0
+    except ValueError:
       return False
