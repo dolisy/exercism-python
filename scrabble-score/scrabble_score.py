@@ -15,4 +15,3 @@ def score(word):
         score += values[key]
   return score
 
-print score('m')
